@@ -4,7 +4,7 @@
 # Thanks for the awesome music!
 ! BPM: 145
 ! OFFSET: 0.53
-! BLURFADE: 160
+! BLURFADE: 144
 　　　　　　　　　　　　　　　　
 サイバサンダサイダサイバサンダサ
 イダサイバサンダサイダサイバサン
