@@ -7,7 +7,6 @@ import { LyricsInterface } from "./types/LyricsInterface";
 import { useState } from "react";
 import { Font } from "p5";
 import NSJPBlack from "./assets/NotoSansJP-Black.ttf";
-import NSJPThin from "./assets/NotoSansJP-Thin.ttf";
 
 const CTCSketch = () => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
