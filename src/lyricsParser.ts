@@ -103,7 +103,7 @@ const lyricsParser = (lyrics: string): LyricsInterface => {
     let data: LyricsInterface = {
         bpm: 145,
         offset: 0.53,
-        blurFade: 160,
+        blurFade: 144,
         lyrics: [
             { timing: 0, character: "エ" },
             { timing: 1, character: "ラ" },
