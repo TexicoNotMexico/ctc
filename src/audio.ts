@@ -31,13 +31,13 @@ const initializeTonejs = async () => {
 };
 
 export const playSound = async () => {
-    if (!isInitialized) await initializeTonejs();
-
     if (Tone.Transport.state === "started") {
-        console.info("pause");
-        Tone.Transport.pause();
+        // console.info("pause");
+        // Tone.Transport.pause();
         return;
     }
+
+    if (!isInitialized) await initializeTonejs();
 
     console.info("play");
     Tone.Transport.start("+0");
