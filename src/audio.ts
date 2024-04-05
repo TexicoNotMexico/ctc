@@ -33,7 +33,6 @@ const initializeTonejs = async () => {
 };
 
 export const playSound = async () => {
-    console.info("playSound()");
     if (!isInitialized) await initializeTonejs();
 
     if (Tone.Transport.state === "started") {

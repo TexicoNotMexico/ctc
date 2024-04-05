@@ -9,6 +9,7 @@ const CTCSketch = () => {
     let isPlaying = false;
     let lyrics: LyricsInterface;
     let divW: number, divH: number, minDivWH, perSixteenth, sixteenth: number;
+
     const CTCInstance: Sketch = (p5) => {
         p5.setup = () => {
             lyrics = lyricsParser(lyricsData);
@@ -16,6 +17,7 @@ const CTCSketch = () => {
             p5.frameRate(60);
             p5.background(0);
         };
+
         p5.draw = () => {
             p5.background(0);
             if (isPlaying) {
@@ -27,6 +29,7 @@ const CTCSketch = () => {
                     .toString()
                     .split(":")
                     .reduce((acc, val, index) => acc + parseFloat(val) * [16, 4, 1][index], 0);
+
                 p5.translate(0, perSixteenth * -(sixteenth - 16 * 7));
                 p5.textSize(minDivWH * 0.85);
                 p5.textAlign(p5.CENTER, p5.CENTER);
@@ -41,14 +44,21 @@ const CTCSketch = () => {
                         );
                     }
                 });
+
+                if (sixteenth <= lyrics.blurFade) {
+                    p5.filter(p5.BLUR, ((lyrics.blurFade - sixteenth) / lyrics.blurFade) * 15);
+                    p5.background(0, ((lyrics.blurFade - sixteenth) / lyrics.blurFade) * 256);
+                }
             }
         };
+
         p5.mouseReleased = () => {
             if (!isPlaying) {
                 isPlaying = true;
                 playSound();
             }
         };
+
         p5.windowResized = () => {
             p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
         };

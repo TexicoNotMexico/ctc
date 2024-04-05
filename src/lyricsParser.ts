@@ -4,6 +4,7 @@ const lyricsParser = (lyrics: string): LyricsInterface => {
     let data: LyricsInterface = {
         bpm: 145,
         offset: 0.53,
+        blurFade: 160,
         lyrics: [
             { timing: 0, character: "エ" },
             { timing: 1, character: "ラ" },
@@ -66,6 +67,11 @@ const lyricsParser = (lyrics: string): LyricsInterface => {
         let offset;
         if ((offset = /^! OFFSET: (\d+\.\d+)/.exec(cur))) {
             data.offset = Number(offset[1]);
+            continue;
+        }
+        let blurFade;
+        if ((blurFade = /^! BLURFADE: (\d+)/.exec(cur))) {
+            data.blurFade = Number(blurFade[1]);
             continue;
         } else {
             data.lyrics = [];
