@@ -1,5 +1,4 @@
 import * as Tone from "tone";
-
 let isInitialized = false;
 
 let music: Tone.Player;

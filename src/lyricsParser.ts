@@ -1,5 +1,104 @@
 import { LyricsInterface } from "./types/LyricsInterface";
 
+const katakanaToHiragana = (str: string) =>
+    str.replace(/[\u30a1-\u30f6]/g, (match) => String.fromCharCode(match.charCodeAt(0) - 0x60));
+
+const fullWidthKatakana = (str: string) => {
+    const convertMap = {
+        ｧ: "ァ",
+        ｨ: "ィ",
+        ｩ: "ゥ",
+        ｪ: "ェ",
+        ｫ: "ォ",
+        ｬ: "ャ",
+        ｭ: "ュ",
+        ｮ: "ョ",
+        ｯ: "ッ",
+        ｰ: "ー",
+        ｱ: "ア",
+        ｲ: "イ",
+        ｳ: "ウ",
+        ｴ: "エ",
+        ｵ: "オ",
+        ｶ: "カ",
+        ｷ: "キ",
+        ｸ: "ク",
+        ｹ: "ケ",
+        ｺ: "コ",
+        ｻ: "サ",
+        ｼ: "シ",
+        ｽ: "ス",
+        ｾ: "セ",
+        ｿ: "ソ",
+        ﾀ: "タ",
+        ﾁ: "チ",
+        ﾂ: "ツ",
+        ﾃ: "テ",
+        ﾄ: "ト",
+        ﾅ: "ナ",
+        ﾆ: "ニ",
+        ﾇ: "ヌ",
+        ﾈ: "ネ",
+        ﾉ: "ノ",
+        ﾊ: "ハ",
+        ﾋ: "ヒ",
+        ﾌ: "フ",
+        ﾍ: "ヘ",
+        ﾎ: "ホ",
+        ﾏ: "マ",
+        ﾐ: "ミ",
+        ﾑ: "ム",
+        ﾒ: "メ",
+        ﾓ: "モ",
+        ﾔ: "ヤ",
+        ﾕ: "ユ",
+        ﾖ: "ヨ",
+        ﾗ: "ラ",
+        ﾘ: "リ",
+        ﾙ: "ル",
+        ﾚ: "レ",
+        ﾛ: "ロ",
+        ﾜ: "ワ",
+        ﾝ: "ン",
+        ｦ: "ヲ",
+        ｶﾞ: "ガ",
+        ｷﾞ: "ギ",
+        ｸﾞ: "グ",
+        ｹﾞ: "ゲ",
+        ｺﾞ: "ゴ",
+        ｻﾞ: "ザ",
+        ｼﾞ: "ジ",
+        ｽﾞ: "ズ",
+        ｾﾞ: "ゼ",
+        ｿﾞ: "ゾ",
+        ﾀﾞ: "ダ",
+        ﾁﾞ: "ヂ",
+        ﾂﾞ: "ヅ",
+        ﾃﾞ: "デ",
+        ﾄﾞ: "ド",
+        ﾊﾞ: "バ",
+        ﾋﾞ: "ビ",
+        ﾌﾞ: "ブ",
+        ﾍﾞ: "ベ",
+        ﾎﾞ: "ボ",
+        ﾊﾟ: "パ",
+        ﾋﾟ: "ピ",
+        ﾌﾟ: "プ",
+        ﾍﾟ: "ペ",
+        ﾎﾟ: "ポ",
+        ﾜﾞ: "ヷ",
+        ｲﾞ: "ヸ",
+        ｳﾞ: "ヴ",
+        ｴﾞ: "ヹ",
+        ｦﾞ: "ヺ",
+    };
+
+    for (const [halfWidthKana, fullWidthKana] of Object.entries(convertMap)) {
+        str = str.replace(new RegExp(halfWidthKana, "g"), fullWidthKana);
+    }
+    return str;
+};
+
 const lyricsParser = (lyrics: string): LyricsInterface => {
     let data: LyricsInterface = {
         bpm: 145,
@@ -87,7 +186,17 @@ const lyricsParser = (lyrics: string): LyricsInterface => {
 
     for (let i = 0; i < rawLyrics.length; i++) {
         if (/[ｦ-ﾟ]/.test(rawLyrics[i])) {
-            segmentedLyrics.push(rawLyrics[i] + rawLyrics[i + 1]);
+            let combined = rawLyrics[i] + rawLyrics[i + 1];
+            if (rawLyrics[i + 1] === "ﾞ" || rawLyrics[i + 1] === "ﾟ") {
+                combined += rawLyrics[i + 2];
+                i += 1;
+            }
+            if (["ﾌｧ", "ﾌｨ", "ﾌｪ", "ﾌｫ", "ﾃｨ", "ﾃﾞｨ", "ｼｪ", "ｼﾞｪ", "ﾃｭ", "ﾃﾞｭ", "ﾌｭ"].includes(combined)) {
+                combined = fullWidthKatakana(combined);
+            } else {
+                combined = katakanaToHiragana(fullWidthKatakana(combined));
+            }
+            segmentedLyrics.push(combined);
             i += 1;
         } else {
             segmentedLyrics.push(rawLyrics[i]);
