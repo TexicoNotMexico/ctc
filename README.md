@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# p5.js + Tone.js + TypeScript で『サイバーサンダーサイダー』 MV 風映像
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 元作品
 
-Currently, two official plugins are available:
+> [!IMPORTANT]
+> 先にこちらを堪能してください。
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 映像 (YouTube)
 
-## Expanding the ESLint configuration
+[![【VY1】サイバーサンダーサイダー【Original MV】[1080p]](http://img.youtube.com/vi/-4S8C2TyK8U/0.jpg)](https://www.youtube.com/watch?v=-4S8C2TyK8U "【VY1】サイバーサンダーサイダー【Original MV】[1080p]")
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 音声の拝借元 (piapro)
 
--   Configure the top-level `parserOptions` property like this:
+[オンガク「サイバーサンダーサイダー」](https://piapro.jp/t/_Anb)
 
-```js
-export default {
-    // other rules...
-    parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        project: ["./tsconfig.json", "./tsconfig.node.json"],
-        tsconfigRootDir: __dirname,
-    },
-};
+> [!NOTE]
+> EZFG 様、すばらしい映像・音楽をありがとうございます！
+
+## `public/LYRICS.txt` の書式
+
+> [!IMPORTANT]
+> 汎用的な動作を保証していません
+
+-   `#` もしくは `!` のない行以降が歌詞の扱いとなる。（それ以降は歌詞以外を記述できない）
+-   行頭が `#` の行は無視される。
+-   行頭が `! BPM: ` の行はその文字列に続く数字が BPM に設定される。
+-   行頭が `! OFFSET: ` の行はその文字列に続く数字（小数点 `.` を含みうる）が再生のオフセット（秒）となる。
+-   歌詞は表示上は例外を除いて 16 字ずつ改行される。
+-   歌詞に入力した改行は無視される。
+
+## 実行 (Vite)
+
 ```
-
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+npm i
+npm run dev
+```
