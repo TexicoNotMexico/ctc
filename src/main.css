@@ -1,0 +1,9 @@
+* {
+    padding: 0;
+    margin: 0;
+    scrollbar-width: none;
+    overflow: hidden;
+}
+::-webkit-scrollbar {
+    display: none;
+}
