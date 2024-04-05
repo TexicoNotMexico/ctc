@@ -1,45 +1,44 @@
 import * as Tone from "tone";
+import lyricsData from "/LYRICS.txt?raw";
+import lyricsParser from "./lyricsParser";
+import { LyricsInterface } from "./types/LyricsInterface";
+
 let isInitialized = false;
 
+let metaData: LyricsInterface;
 let music: Tone.Player;
-
-export let drawingState = {
-    on16th: false,
-    currentBeat: 0,
-    currentMeasure: 0,
-};
 
 const declareSchedule = () => {
     Tone.Transport.schedule((time) => {
-        music.start(time, 0.53);
+        music.start(time, 0 + metaData.offset);
     }, "0:0:0");
 };
 
 const initializeTonejs = async () => {
-    console.info("initializing...");
+    metaData = lyricsParser(lyricsData);
+
     await Tone.start();
 
     music = new Tone.Player("AUDIO.mp3").toDestination();
 
-    Tone.Transport.bpm.value = 145;
+    Tone.Transport.bpm.value = metaData.bpm;
 
     declareSchedule();
 
     await Tone.loaded();
 
     isInitialized = true;
-    console.info("initialized");
 };
 
 export const playSound = async () => {
     if (!isInitialized) await initializeTonejs();
 
     if (Tone.Transport.state === "started") {
-        console.info("already started. pausing...");
+        console.info("pause");
         Tone.Transport.pause();
         return;
     }
 
-    console.info("playing...");
-    Tone.Transport.start("+0", "0:0:0");
+    console.info("play");
+    Tone.Transport.start("+0");
 };
