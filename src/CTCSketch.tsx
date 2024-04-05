@@ -6,8 +6,6 @@ import lyricsParser from "./lyricsParser";
 import { LyricsInterface } from "./types/LyricsInterface";
 import { useState } from "react";
 
-const fonts = ["./assets/NotoSansJP-Black.ttf"];
-
 const CTCSketch = () => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [mode, setMode] = useState<number>(0);
